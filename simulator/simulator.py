@@ -1,8 +1,12 @@
 import numpy as np
 from scipy.integrate import odeint
+import warnings
+
 
 class NBodySimulator:
-    
+    """
+    Class to generate a simulation of the n-body problem using odeint solver to solve the equations with n bodies.
+    """
     
     def __init__(self, n, G=1):
         """
@@ -64,6 +68,8 @@ class NBodySimulator:
         self.r = r
         self.v = v
         
+        return self
+        
     
     def simulate(self, t):
         """
@@ -97,9 +103,13 @@ class NBodySimulator:
         self.r_sol_com = np.zeros(self.r_sol.shape)
         for i in range(self.n):
             self.r_sol_com[:,i*3:i*3+3] = self.r_sol[:,i*3:i*3+3] - self.r_com
-        
+    
+    
+    pass
    
 
+    
+    
 def solution(w, t, n, G, m):
     """
     Calculates the derivatives of the n-body solution for numerical integration.
@@ -124,6 +134,57 @@ def solution(w, t, n, G, m):
             if not body == other_body:
                 dvdt[body] += G * m[other_body] * (r[other_body] - r[body]) / np.linalg.norm(r[other_body] - r[body]) ** 3
         
-    drdt = w[n*3:]*7.239323869320315
+    drdt = w[n*3:]
         
     return np.concatenate((drdt, dvdt.flatten()))
+
+
+def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection=None):
+    """
+    Function to create sample simulations using random initial values.
+    
+    Inputs:
+        n_samples - number of samples
+        n_bodies - number of bodies. default 3
+        dim - number of dimensions to generate data (can be 2 or 3, raises error if not). default 3
+        same_m - boolean of whether masses are the same or not. default True, sets all to 1
+        collection - mongodb collection to write data to. default None
+        
+    Returns:
+        list of samples of length n_samples
+    """
+    
+    
+    if not dim == 3 and not dim == 2:
+        raise ValueError(f'Incorrect value {dim} for dim. Should be 2 or 3.')
+    
+    sim = NBodySimulator(n=n_bodies)
+    
+    samples = []
+    
+    n = 0
+    
+    while n < n_samples:
+        if same_m:
+            m = np.ones((n_bodies,1))
+        else:
+            m = np.random.random((n_bodies,1))*5
+
+        r = np.random.random((n_bodies, 3))*2-1
+        v = np.random.random((n_bodies, 3))*2-1
+
+        if dim == 2:
+            r[:,2] = 0
+            v[:,0] = 0
+
+        t = np.linspace(0, 30, 5000)
+        
+        try:
+            sim.fit(r, v, m).simulate(t)
+            samples.append(sim.sol)
+            n += 1
+        except Warning:
+            print('Warning for ode raised. Simulation skipped.')
+            continue
+    
+    return samples
