@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import odeint
 import warnings
+from pymongo import MongoClient
 
 
 class NBodySimulator:
@@ -25,9 +26,11 @@ class NBodySimulator:
         self.r_com = None
         self.v_com = None
         self.sol = None
+        self.ode_info = None
         self.r_sol = None
         self.v_sol = None
         self.r_sol_com = None
+        self.v_sol_com = None
         
     
     def fit(self, r, v, m=None):
@@ -82,7 +85,9 @@ class NBodySimulator:
         
         init_params = np.concatenate((self.r.flatten(), self.v.flatten()))
         
-        self.sol = odeint(solution, init_params, t, args=(self.n, self.G, self.m))
+        sol = odeint(solution, init_params, t, args=(self.n, self.G, self.m), full_output=1)
+        self.sol = sol[0]
+        self.ode_info = sol[1]
         self.r_sol = self.sol[:,:self.n*3]
         self.v_sol = self.sol[:,self.n*3:]
         
@@ -96,13 +101,17 @@ class NBodySimulator:
         """
         
         self.r_com = np.zeros(shape=(self.r_sol.shape[0],3))
+        self.v_com = np.zeros(shape=(self.r_sol.shape[0],3))
         for t in range(self.r_com.shape[0]):
             self.r_com[t] = ((self.r_sol[t].reshape(self.r.shape).T @ self.m) / np.sum(self.m)).T
+            self.v_com[t] = ((self.v_sol[t].reshape(self.v.shape).T @ self.m) / np.sum(self.m)).T
         
         
         self.r_sol_com = np.zeros(self.r_sol.shape)
+        self.v_sol_com = np.zeros(self.v_sol.shape)
         for i in range(self.n):
             self.r_sol_com[:,i*3:i*3+3] = self.r_sol[:,i*3:i*3+3] - self.r_com
+            self.v_sol_com[:,i*3:i*3+3] = self.v_sol[:,i*3:i*3+3] - self.v_com
     
     
     pass
@@ -154,16 +163,13 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection=None):
         list of samples of length n_samples
     """
     
-    
     if not dim == 3 and not dim == 2:
         raise ValueError(f'Incorrect value {dim} for dim. Should be 2 or 3.')
     
     sim = NBodySimulator(n=n_bodies)
     
     samples = []
-    
     n = 0
-    
     while n < n_samples:
         if same_m:
             m = np.ones((n_bodies,1))
@@ -177,14 +183,34 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection=None):
             r[:,2] = 0
             v[:,0] = 0
 
-        t = np.linspace(0, 30, 5000)
+        t = np.linspace(0, 200, 5000)
+        
+        if collection is None:
+            name = ''
+        else:
+            name = collection.name
         
         try:
             sim.fit(r, v, m).simulate(t)
-            samples.append(sim.sol)
+            
+            if sim.sol_info['message'] != 'Integration successful.':
+                raise Exception()
+                
+            if collection is None:
+                samples.append(sim.sol)
+            else:
+                collection.insert_one({'id': n, 
+                                       'sol': sim.sol.tolist(),
+                                       'r_sol': sim.r_sol.tolist(),
+                                       'v_sol': sim.v_sol.tolist(),
+                                       'r_sol_com': sim.r_sol_com.tolist(),
+                                       'v_sol_com': sim.v_sol_com.tolist(),
+                                       'info': sim.sol_info
+                                      })
+            print(f'Generated simulation {n+1:7.0f} / {n_samples:7.0f} for sample {name}')
             n += 1
-        except Warning:
-            print('Warning for ode raised. Simulation skipped.')
+        except Exception:
+            print('Warning for odeint raised. Simulation skipped.')
             continue
     
     return samples

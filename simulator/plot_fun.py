@@ -3,9 +3,11 @@ plt.rcParams["animation.html"] = "jshtml"
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import animation, rcParams
 
-def plot_3d(n, r):
+def plot_3d(r):
     fig=plt.figure(figsize=(15,15))
     ax=fig.add_subplot(111,projection="3d")
+    
+    n = int(r.shape[1]/3)
     
     for i in range(n):
         r_plot = r[:,i*3:i*3+3]
@@ -30,7 +32,8 @@ def animate(i, r, lines, speed=20):
 writer = animation.PillowWriter(fps=60)
 
 
-def plot_3d_animate(n, r, path=None, speed=20):
+def plot_3d_animate(r, path=None, speed=20):
+    n = int(r.shape[1]/3)
     fig=plt.figure(figsize=(10,10))
     ax=fig.add_subplot(111,projection="3d")
     ax.set_xlim3d([-1.5, 0.5])
