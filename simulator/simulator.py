@@ -10,7 +10,7 @@ class NBodySimulator:
         
         Inputs:
             n - number of bodies in the system
-            G - gravitational constant. default is univarsal constant in N-m2/kg2
+            G - gravitational constant. default is 1.
         """
         
         self.n = n
@@ -42,7 +42,6 @@ class NBodySimulator:
                 Should be shape (n*3,3). 
                 i.e. [[vx1, vy1, vz1], [vx2, vy2, vz2], [vx3, vy3, vz3]] for 3 bodies.
                 Set z's to 0 for 2D simulations.
-            
         """
         
         req_shape_m = (self.n,1)
@@ -73,9 +72,6 @@ class NBodySimulator:
         Inputs:
             t - np.array of time steps to solve for.
                 First index should correspond to initial time.
-                
-        Returns:
-            np.array of solutions for each time step in t.
         """
         
         init_params = np.concatenate((self.r.flatten(), self.v.flatten()))
@@ -88,6 +84,10 @@ class NBodySimulator:
     
     
     def normalize_com(self):
+        """
+        Creates a new set of solution results that is 'normalized' by subtracting off the 
+        center of mass so the system can be plotted and viewd from a stationary point.
+        """
         
         self.r_com = np.zeros(shape=(self.r_sol.shape[0],3))
         for t in range(self.r_com.shape[0]):
