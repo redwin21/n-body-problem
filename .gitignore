@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # data
-*intro.txt
-
+misc/*
+*.DS_Store
