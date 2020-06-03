@@ -10,7 +10,7 @@ def main():
     
     client = MongoClient('localhost', 27017)
     db = client['n-body']
-    n_samples = 5
+    n_samples = 10000
     
     n_bodies = [2, 2, 2, 2, 3, 3, 3, 3]
     dim = [2, 2, 3, 3, 2, 2, 3, 3]
