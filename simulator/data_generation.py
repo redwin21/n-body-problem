@@ -1,6 +1,7 @@
 from simulator import NBodySimulator
 from pymongo import MongoClient
 import numpy as np
+import multiprocessing as mp
 
 
 def main():
@@ -8,22 +9,29 @@ def main():
     Run simulation to generate various datasets.
     """
     
+    processes = []
+    
     client = MongoClient('localhost', 27017)
     db = client['n-body']
-    n_samples = 10000
+    n_samples = 5
     
     n_bodies = [2, 2, 2, 2, 3, 3, 3, 3]
     dim = [2, 2, 3, 3, 2, 2, 3, 3]
     same_m = [True, False, True, False, True, False, True, False]
     
     for i in range(len(n_bodies)):
-        name = f'samples_{n_bodies[i]}_bodies_{dim[i]}_dim_{int(same_m[i])}_m'
-        collection = db[name]
-        generate_data(n_samples, n_bodies[i], dim[i], same_m[i], collection)
+        p = mp.Process(target=generate_data, args=(n_samples,
+                                         n_bodies[i], 
+                                         dim[i], 
+                                         same_m[i], 
+                                         f'samples_{n_bodies[i]}_bodies_{dim[i]}_dim_{int(same_m[i])}_m'))
+        processes.append(p)
+        p.start()
     
+    for process in processes:
+        process.join()
     
-    
-def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection=None):
+def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=None):
     """
     Function to create sample simulations using random initial values.
     
@@ -37,6 +45,12 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection=None):
     Returns:
         list of samples of length n_samples
     """
+    
+    client = MongoClient('localhost', 27017)
+    db = client['n-body']
+    
+    if collection_name is not None:
+        collection = db[collection_name]
     
     if not dim == 3 and not dim == 2:
         raise ValueError(f'Incorrect value {dim} for dim. Should be 2 or 3.')
