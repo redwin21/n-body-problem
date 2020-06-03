@@ -13,11 +13,11 @@ def main():
     
     client = MongoClient('localhost', 27017)
     db = client['n-body']
-    n_samples = 10000 
+    n_samples = 2000
     
-    n_bodies = [2, 2, 2, 2, 3, 3, 3, 3]
-    dim = [2, 2, 3, 3, 2, 2, 3, 3]
-    same_m = [True, False, True, False, True, False, True, False]
+    n_bodies = [2, 2, 3, 3]
+    dim = [3, 3, 3, 3]
+    same_m = [True, False, True, False]
     
     for i in range(len(n_bodies)):
         p = mp.Process(target=generate_data, args=(n_samples,
@@ -72,7 +72,7 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=Non
             r[:,2] = 0
             v[:,0] = 0
 
-        t = np.linspace(0, 40, 5000)
+        t = np.linspace(0, 30, 5000)
         
         if collection is None:
             name = ''
@@ -90,11 +90,9 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=Non
                 samples.append(sim.sol)
             else:
                 collection.insert_one({'id': n, 
+                                       'mass': sim.m.tolist(),
                                        'sol': sim.sol.tolist(),
-                                       'r_sol': sim.r_sol.tolist(),
-                                       'v_sol': sim.v_sol.tolist(),
-                                       'r_sol_com': sim.r_sol_com.tolist(),
-                                       'v_sol_com': sim.v_sol_com.tolist(),
+                                       'sol_com': sim.sol_com.tolist(),
                                        'message': sim.ode_info['message']
                                       })
             print(f'Generated simulation {n+1:7.0f} / {n_samples:7.0f} for sample {name}')

@@ -26,6 +26,7 @@ class NBodySimulator:
         self.r_com = None
         self.v_com = None
         self.sol = None
+        self.sol_com = None
         self.ode_info = None
         self.r_sol = None
         self.v_sol = None
@@ -112,6 +113,8 @@ class NBodySimulator:
         for i in range(self.n):
             self.r_sol_com[:,i*3:i*3+3] = self.r_sol[:,i*3:i*3+3] - self.r_com
             self.v_sol_com[:,i*3:i*3+3] = self.v_sol[:,i*3:i*3+3] - self.v_com
+        
+        self.sol_com = np.concatenate((self.r_sol_com, self.v_sol_com), axis=1)
     
     
     pass
