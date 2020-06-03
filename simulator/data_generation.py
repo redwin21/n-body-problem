@@ -13,7 +13,7 @@ def main():
     
     client = MongoClient('localhost', 27017)
     db = client['n-body']
-    n_samples = 5
+    n_samples = 10000 
     
     n_bodies = [2, 2, 2, 2, 3, 3, 3, 3]
     dim = [2, 2, 3, 3, 2, 2, 3, 3]
@@ -72,7 +72,7 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=Non
             r[:,2] = 0
             v[:,0] = 0
 
-        t = np.linspace(0, 50, 5000)
+        t = np.linspace(0, 40, 5000)
         
         if collection is None:
             name = ''
