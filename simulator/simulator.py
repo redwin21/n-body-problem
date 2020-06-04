@@ -98,7 +98,7 @@ class NBodySimulator:
     def normalize_com(self):
         """
         Creates a new set of solution results that is 'normalized' by subtracting off the 
-        center of mass so the system can be plotted and viewd from a stationary point.
+        center of mass so the system can be plotted and viewed from a stationary point.
         """
         
         self.r_com = np.zeros(shape=(self.r_sol.shape[0],3))

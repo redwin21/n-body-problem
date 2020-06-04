@@ -7,6 +7,7 @@ import multiprocessing as mp
 def main():
     """
     Run simulation to generate various datasets.
+    Parallelized.
     """
     
     processes = []
@@ -79,9 +80,9 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=Non
         else:
             name = collection.name
         
+        # try/except if ode times out
         try:
             sim.fit(r, v, m).simulate(t)
-            
             
             if sim.ode_info['message'] != 'Integration successful.':
                 raise Exception()
@@ -97,6 +98,7 @@ def generate_data(n_samples, n_bodies=3, dim=3, same_m=True, collection_name=Non
                                       })
             print(f'Generated simulation {n+1:7.0f} / {n_samples:7.0f} for sample {name}')
             n += 1
+            
         except Exception:
             print('Warning for odeint raised. Simulation skipped.')
             continue
