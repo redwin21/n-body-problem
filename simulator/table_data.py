@@ -92,17 +92,27 @@ def main():
     collections = ['samples_2_bodies_3_dim_1_m', 
                   'samples_2_bodies_3_dim_0_m',
                   'samples_3_bodies_3_dim_1_m',
+                  'samples_3_bodies_3_dim_0_m',
+                  'samples_2_bodies_3_dim_1_m', 
+                  'samples_2_bodies_3_dim_0_m',
+                  'samples_3_bodies_3_dim_1_m',
                   'samples_3_bodies_3_dim_0_m']
     
     steps = [10, 100, 1000]
     processes = []
+    
+    com = [False, False, False, False, True, True, True, True]
             
-    for collection in collections:
+    for i, collection in enumerate(collections):
         
         n_bodies = int(collection.split('_')[1])
-        path = f'./data/{collection}_com.csv'
         
-        p = mp.Process(target=tabularize, args=(collection, steps, 100, n_bodies, False, path))
+        if com[i]:
+            path = f'./data/{collection}_com.csv'
+        else:
+            path = f'./data/{collection}.csv'
+        
+        p = mp.Process(target=tabularize, args=(collection, steps, 100, n_bodies, com[i], path))
         processes.append(p)
         p.start()
     
