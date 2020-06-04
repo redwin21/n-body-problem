@@ -132,4 +132,5 @@ dmypy.json
 misc/*
 *.DS_Store
 *m.csv
+*.ipynb_checkpoints
 
