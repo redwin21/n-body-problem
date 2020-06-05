@@ -133,4 +133,5 @@ misc/*
 *.DS_Store
 *m.csv
 *.ipynb_checkpoints
-
+*stats.txt
+*0.pkl
