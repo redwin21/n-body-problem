@@ -1,0 +1,6 @@
+Fitting model from:  ../data/samples_2_bodies_3_dim_1_m_com.csv
+Fitting model from:  ../data/samples_2_bodies_3_dim_1_m_com.csv
+Fitting model from:  ../data/samples_2_bodies_3_dim_1_m_com.csv
+Fitting model from:  ../data/samples_3_bodies_3_dim_1_m_com.csv
+Fitting model from:  ../data/samples_3_bodies_3_dim_1_m_com.csv
+Fitting model from:  ../data/samples_3_bodies_3_dim_1_m_com.csv
