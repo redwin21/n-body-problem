@@ -25,13 +25,15 @@ class GSModel():
         
     def fit(self, X, y):
 
-        model = MultiOutputRegressor(GradientBoostingRegressor(), n_jobs=-1)
-        self.model = GridSearchCV(estimator=model, 
-                                param_grid=self.parameters, 
-                                cv=5, 
-                                scoring='neg_mean_squared_error',
-                                n_jobs=-1
-                            )
+        self.model = MultiOutputRegressor(GradientBoostingRegressor(n_estimators=1000,
+                                                                   learning_rate=0.05,
+                                                                   max_depth=10), n_jobs=-1)
+#         self.model = GridSearchCV(estimator=model, 
+#                                 param_grid=self.parameters, 
+#                                 cv=5, 
+#                                 scoring='neg_mean_squared_error',
+#                                 n_jobs=-1
+#                             )
 
         self.model.fit(X, y)
 
@@ -81,9 +83,9 @@ def build_model(path, step, gs_params):
 def main():
     
     gs_params = {
-                'estimator__n_estimators': [100, 500, 1000, 2000],
-                'estimator__max_depth': [10, 20, 30, 40, 50],
-                'estimator__learning_rate': [0.5, 0.1, 0.05, 0.01, 0.005]
+                'estimator__n_estimators': [1000],
+                'estimator__max_depth': [10],
+                'estimator__learning_rate': [0.05]
             }
     
     steps = [10, 100, 1000]
