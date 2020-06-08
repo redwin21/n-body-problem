@@ -1,8 +1,16 @@
 # N-Body Can Solve This Problem
 
+<p align="left">
+<img align="center" src="https://img.shields.io/badge/last%20modified-june%20%202020-success">
+|
+<img align="center" src="https://img.shields.io/badge/status-in%20progress-yellow">
+</p>
+
 [Eddie Ressegue](http://github.com/redwin21)
 
-The n-body problem is an analytically unsolvable astrophysics model that describes the motion of celestial bodies. This project attempts to capture the physics with machine learning. Presentation slides for this project can be found [here]().
+The n-body problem is an analytically unsolvable astrophysics model that describes the motion of celestial bodies. This project attempts to capture the physics with machine learning. 
+
+Presentation slides for this project can be found [here]().
 
 ---
 
@@ -33,6 +41,12 @@ The n-body problem is an analytically unsolvable astrophysics model that describ
 ---
 
 ## Predictions
+
+<p align="center">
+<img align="center" width="1000" src="images/gifs/3_bodies_100_steps_2.gif">
+</p>
+
+![](images/gifs/3_bodies_100_steps_2.gif)
 
 ---
 
