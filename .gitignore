@@ -135,3 +135,4 @@ misc/*
 *.ipynb_checkpoints
 *stats.txt
 *0.pkl
+notebook_scratch/*
