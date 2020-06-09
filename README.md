@@ -24,8 +24,9 @@ The N-Body Problem is an analytically unsolvable astrophysics model that describ
 - <a href="https://github.com/redwin21/n-body-problem#simulation-and-data-generation">Simulation and Data Generation</a>
 - <a href="https://github.com/redwin21/n-body-problem#Modeling">Modeling</a>
 - <a href="https://github.com/redwin21/n-body-problem#predictions">Predictions</a>
+- <a href="https://github.com/redwin21/n-body-problem#conclusions">Conclusions</a>
+- <a href="https://github.com/redwin21/n-body-problem#tools">Tools</a>
 - <a href="https://github.com/redwin21/n-body-problem#sources">Sources</a>
-- <a href="https://github.com/redwin21/n-body-problem#implications">Implications</a>
 
 ---
 
@@ -136,9 +137,9 @@ The final models used for predections were the optimized gradient boosting regre
 Because of the chaotic nature of the problem, and the level of precision required, predictions were made only using the simulated data. No prediction was made based on the results of a previous prediction. In practice, compunding predictions also probably would not be made.
 
 ### 2-Body Predictions
-<p align="center">
+
 <img align="center" width="1200" src="images/gifs/2_bodies_10_steps.gif">
-</p>
+
 <p align="center">
 <img align="center" width="1200" src="images/gifs/2_bodies_100_steps.gif">
 </p>
@@ -163,7 +164,26 @@ Time and position scales have been intentionally left off of these plots. As sta
 
 ---
 
-## Implications
+## Conclusions
+
+Modeling a chaotic system with machine learning is challenging, but possible. Increased time spent optimizing and tuning the models can certainly improve the performance to where machine learning models could be a practical approach to solving the n-body problem. This idea can be extended further to general complex models as well. Simulations take a long time and a lot of computing power to generate, but a machine learning model can make predictions pretty quickly once it has already been trained. Future work on optimizing these models can save time for generating models of celestial systems in future astronomy endeavors.
+
+---
+
+## Tools
+
+The tools used to complete the project:
+
+- Python for scripting
+- Jupyter Lab for testing scripts
+- AWS EC2 for computing power
+- MongoDB for data dumping
+- Pandas and Numpy for data manipulation
+- Matplotlib for visualizations
+- SciPy for ODE solvers
+- Tensorflow for Neural Network modeling
+- Sci-Kit Learn for Gradient Boosting Modeling
+- Git and GitHub for version control
 
 ---
 
