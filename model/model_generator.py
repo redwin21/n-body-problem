@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import multiprocessing as mp
-from transform import get_X_y, transform_X_y, inverse_transform_X_y, normalize
+from model.transform import get_X_y, transform_X_y, inverse_transform_X_y, normalize
 
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import StandardScaler
