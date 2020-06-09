@@ -41,6 +41,9 @@ def plot_3d(r):
     ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.05))
     ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.05))
     ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 0.05))
+    ax.set_title('Simulated Orbits', fontsize=20, color='w')
+    
+    return fig
     
     
 def animate(i, r, lines, scatters, speed=20):
