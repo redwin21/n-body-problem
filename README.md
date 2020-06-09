@@ -20,7 +20,7 @@ Presentation slides for this project can be found [here]().
 
 ## Table of Contents
 
-- <a href="https://github.com/redwin21/n-body-problem#history-of-the-n-body-problem">History of the N-Body Problem</a>
+- <a href="https://github.com/redwin21/n-body-problem#description-of-the-n-body-problem">Description of the N-Body Problem</a>
 - <a href="https://github.com/redwin21/n-body-problem#simulation-and-data-generation">Simulation and Data Generation</a>
 - <a href="https://github.com/redwin21/n-body-problem#Modeling">Modeling</a>
 - <a href="https://github.com/redwin21/n-body-problem#predictions">Predictions</a>
@@ -29,7 +29,21 @@ Presentation slides for this project can be found [here]().
 
 ---
 
-## History of the N-Body Problem
+## Description of the N-Body Problem
+
+The N-Body problem is the problem of taking the position and velocity of point masses and solving for their motion according to Newton's Laws of motion and gravity. The *n* denotes the number of bodies in the system that is being modeled. The 2-body problem has an analytical solution, meaning there is a closesd-form set of equations to describe the motion of the point masses. However, the 3-body problem, and all number of bodies *n* greater than that, are not solvable the same way. There is a power series solution that describes teh motion, but is not solvable for practical purposes. The only way to determine the subsequent motion of those *n* point masses is to perform numerical integration, iterating over discrete time steps to determine some future state. This process is complex, and for reasonable models of distant future states, a lot of computing power is required.
+
+Some of the equations that describe the motion of 3 bodies (where *G* is the universal gravitational constant, *m* is the mass, *r* is the position, and \ddot{r}):
+
+<p align="center">
+<img align="center" width="300" src="images/3-body-eq.svg">
+</p>
+
+The high computing power needed comes form the fact that the problem is inherently chaotic. This means that minor issues with roundoff error can propogate as the simulation progresses and completely change the results. Therefore, high precision is required, which means very small time steps and a lot of computing power.
+
+Machine learning uses pattern recognition to capture a relationship with data, and the laws of motion are well defined relationships. The idea behind this project is to train a machine learning model on the data from simulations, with the "predictor" being the current state of position and velocity, and the "target" being some future state after some number of time steps. This application could be used to greatly speed up or reduce computing time for generating models of n-body systems, improving scientific discoveries and experiments.
+
+One of the disadvantages of approaching this with machine learning is the chaotic nature. The machine learning predictions have to be very precise to match the simulated model over time. For this reason, the machine learning predictions were never compounded, meaning no prediction was made from a prior prediction, but was instead made from a prior simulated state.
 
 ---
 
