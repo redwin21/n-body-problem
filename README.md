@@ -49,7 +49,7 @@ One of the disadvantages of approaching this with machine learning is the chaoti
 
 ## Simulation and Data Generation
 
-### Simulation Setup
+#### Simulation Setup
 
 The data used for modeling was generating by running 1000 simulations for various system configurations. The configurations addressed are:
 
@@ -68,7 +68,7 @@ An example plot of the a simulation can be seen below, where the lines trace the
 <img align="center" width="400" src="./images/simulation.png">
 </p>
 
-### Data Converted for Modeling
+#### Data Converted for Modeling
 
 The data provided by the simulation is the position and velocity of each body at each time step. To be used in a machine learning model, the data was restructured into having columns for each initial position and velocity paired with positions and velocity of some future time state. Each of the 1000 simulations was sampled randomly for an initial state and then the corresponding future state.
 
@@ -119,14 +119,42 @@ Training a machine learning model with this many features, especially this many 
 
 #### Model Performance
 
+The initial intent was to use Artificial Neural Networks to model the n-body problem. They are naturally good at characterizing nonlinear relationships, which the motion of point masses falls under. An attempt was made at using neural networks with Tensorflow. However, better results were acquired by using a Gradient Boosting Regressor wrapped with multi-output capabilities using Sci-Kit Learn.
 
+The figure below shows the various model performances for each of the three time horizons modeled. The performance results use root mean squared error (RMSE) as a metric. The average RMSE is take for each model for position and velocity separately, since they are less related targets. The gradient boosting regressors were lightly optimized using a grid search with minimal search parameters (the model took too long to train to do a large spread). There is a clear trend that shows that performance decreases as time horizon increase, which is expected. Since position and velocity are on the same scale, it also appears that the models are better at predicting future positions than they are velocities.
+
+<p align="center">
+<img align="center" width="800" src="images/model_perf.png">
+</p>
 
 ---
 
 ## Predictions
 
+The final models used for predections were the optimized gradient boosting regressors. The following animations show examples of the actual simulation next to the prediction of the simulation for 2 and 3 bodies at all of the time horizons. The 10 time step predictions are so close that predicting those is trivial and looks very accurate. The 1000 time step predictions are so far that the predictions are pretty inaccurate, although they seem to follow the general trend.
+
+Because of the chaotic nature of the problem, and the level of precision required, predictions were made only using the simulated data. No prediction was made based on the results of a previous prediction. In practice, compunding predictions also probably would not be made.
+
+### 2-Body Predictions
+<p align="center">
+<img align="center" width="1200" src="images/gifs/2_bodies_10_steps.gif">
+</p>
+<p align="center">
+<img align="center" width="1200" src="images/gifs/2_bodies_100_steps.gif">
+</p>
+<p align="center">
+<img align="center" width="1200" src="images/gifs/2_bodies_1000_steps.gif">
+</p>
+
+### 3-Body Predictions
+<p align="center">
+<img align="center" width="1200" src="images/gifs/3_bodies_10_steps_2.gif">
+</p>
 <p align="center">
 <img align="center" width="1200" src="images/gifs/3_bodies_100_steps_2.gif">
+</p>
+<p align="center">
+<img align="center" width="1200" src="images/gifs/3_bodies_1000_steps_2.gif">
 </p>
 
 #### A note on scale and predictive capability
