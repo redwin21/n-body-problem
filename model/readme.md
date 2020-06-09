@@ -1,6 +1,6 @@
 # Modeling the N-Body Problem with Machine Learning
 
-The data provided by the simulation is the position and velocity of each body at each time step. To be used in a machine learning model, the data was restructured into a having columns for each initial position and velocity paired with positions and velocity of some future time state.
+The data provided by the simulation is the position and velocity of each body at each time step. To be used in a machine learning model, the data was restructured into having columns for each initial position and velocity paired with positions and velocity of some future time state.
 
 For the models in this study, time horizons of 10, 100, and 1000 time steps were used.
 
