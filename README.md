@@ -14,7 +14,7 @@
 
 The N-Body Problem is an analytically unsolvable astrophysics model that describes the motion of celestial bodies. This project attempts to capture the physics with machine learning. 
 
-<!-- Presentation slides for this project can be found [here](). -->
+<!-- Presentation slides for this project can be found [here](https://docs.google.com/presentation/d/1oGZb0Qt4kjqZJ1Wt1Z70mgycKImrKrbjcb4w2-hWYXw/edit?usp=sharing). -->
 
 ---
 
@@ -28,7 +28,7 @@ The N-Body Problem is an analytically unsolvable astrophysics model that describ
 
 The N-Body problem is the problem of taking the position and velocity of point masses and solving for their motion according to Newton's Laws of motion and gravity. The *n* denotes the number of bodies in the system that is being modeled. The 2-body problem has an analytical solution, meaning there is a closesd-form set of equations to describe the motion of the point masses. However, the 3-body problem, and, more generally, all problems with *n* bodies in the system, are not solvable the same way. There is a power series solution that describes the motion, but it is not solvable for practical purposes. The only way to determine the subsequent motion of those *n* point masses is to perform numerical integration, iterating over discrete time steps to determine some future state. This process is complex, and for reasonable models of distant future states, a lot of computing power is required.
 
-The following are some of the equations that describe the motion of 3 bodies (where <a href="https://www.codecogs.com/eqnedit.php?latex=G" target="_blank"><img src="https://latex.codecogs.com/gif.latex?G" title="G" /></a> is the universal gravitational constant, <a href="https://www.codecogs.com/eqnedit.php?latex=m_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m_n" title="m_n" /></a> is the mass of a body, <a href="https://www.codecogs.com/eqnedit.php?latex=r_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?r_n" title="r_n" /></a> is the position, and <a href="https://www.codecogs.com/eqnedit.php?latex=\ddot{r}_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ddot{r}_n" title="\ddot{r}_n" /></a> is the acceleration):
+The following are some of the differential equations that describe the motion of 3 bodies (where <a href="https://www.codecogs.com/eqnedit.php?latex=G" target="_blank"><img src="https://latex.codecogs.com/gif.latex?G" title="G" /></a> is the universal gravitational constant, <a href="https://www.codecogs.com/eqnedit.php?latex=m_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m_n" title="m_n" /></a> is the mass of a body, <a href="https://www.codecogs.com/eqnedit.php?latex=r_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?r_n" title="r_n" /></a> is the position, and <a href="https://www.codecogs.com/eqnedit.php?latex=\ddot{r}_n" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ddot{r}_n" title="\ddot{r}_n" /></a> is the acceleration):
 
 <p align="center">
 <img align="center" width="300" src="images/3-body-eq.svg">
@@ -112,7 +112,7 @@ Training a machine learning model with this many features, especially with this 
 
 #### Model Performance
 
-The initial intent was to use Artificial Neural Networks to model the n-body problem. They are naturally good at characterizing nonlinear relationships, which the motion of point masses falls under. An attempt was made at using neural networks with Tensorflow. However, better results were acquired by using a Gradient Boosting Regressor wrapped with multi-output capabilities using Scikit-Learn.
+The initial instinct was to use Artificial Neural Networks to model the n-body problem. They are naturally good at characterizing nonlinear relationships, which the motion of point masses falls under. An attempt was made at using neural networks with Tensorflow. However, better results were acquired by using a Gradient Boosting Regressor wrapped with multi-output capabilities using Scikit-Learn.
 
 The figure below shows the various model performances for each of the three time horizons modeled. The performance results use root mean squared error (RMSE) as a metric. The RMSE of each target feature is calculated using predictions of a holdout test set of simulations. The average RMSE is taken for each model for all positions and velocities, separately. The gradient boosting regressors were lightly optimized using a grid search with minimal search parameters (the model took too long to train to do a larger grid search for hyperparameters). There is a clear trend that shows that performance decreases as time horizon increase, which is expected. Since position and velocity are on the same scale, it also appears that the models are better at predicting future positions than they are velocities. With position and velocity values being unit values on a scale of -1 to 1, these errors can be though of as % errors.
 
