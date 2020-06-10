@@ -18,19 +18,13 @@ The N-Body Problem is an analytically unsolvable astrophysics model that describ
 
 ---
 
-## Table of Contents
-
-- <a href="https://github.com/redwin21/n-body-problem#description-of-the-n-body-problem">Description of the N-Body Problem</a>
-- <a href="https://github.com/redwin21/n-body-problem#simulation-and-data-generation">Simulation and Data Generation</a>
-- <a href="https://github.com/redwin21/n-body-problem#Modeling">Modeling</a>
-- <a href="https://github.com/redwin21/n-body-problem#predictions">Predictions</a>
-- <a href="https://github.com/redwin21/n-body-problem#conclusions">Conclusions</a>
-- <a href="https://github.com/redwin21/n-body-problem#tools">Tools</a>
-- <a href="https://github.com/redwin21/n-body-problem#sources">Sources</a>
+<p align="center">
+    <a href="https://github.com/redwin21/n-body-problem#n-body-problem-description">N-Body Problem Description</a> | <a href="https://github.com/redwin21/n-body-problem#simulation-and-data-generation">Simulation and Data Generation</a> | <a href="https://github.com/redwin21/n-body-problem#Modeling">Modeling</a> | <a href="https://github.com/redwin21/n-body-problem#predictions">Predictions</a> | <a href="https://github.com/redwin21/n-body-problem#conclusions">Conclusions</a> | <a href="https://github.com/redwin21/n-body-problem#tools">Tools</a> | <a href="https://github.com/redwin21/n-body-problem#sources">Sources</a>
+</p>
 
 ---
 
-## Description of the N-Body Problem
+## N-Body Problem Description
 
 The N-Body problem is the problem of taking the position and velocity of point masses and solving for their motion according to Newton's Laws of motion and gravity. The *n* denotes the number of bodies in the system that is being modeled. The 2-body problem has an analytical solution, meaning there is a closesd-form set of equations to describe the motion of the point masses. However, the 3-body problem, and, more generally, all problems with *n* bodies in the system, are not solvable the same way. There is a power series solution that describes the motion, but it is not solvable for practical purposes. The only way to determine the subsequent motion of those *n* point masses is to perform numerical integration, iterating over discrete time steps to determine some future state. This process is complex, and for reasonable models of distant future states, a lot of computing power is required.
 
