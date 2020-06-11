@@ -14,7 +14,7 @@
 
 The N-Body Problem is an analytically unsolvable astrophysics model that describes the motion of celestial bodies. This project attempts to capture the physics with machine learning. 
 
-<!-- Presentation slides for this project can be found [here](https://docs.google.com/presentation/d/1oGZb0Qt4kjqZJ1Wt1Z70mgycKImrKrbjcb4w2-hWYXw/edit?usp=sharing). -->
+<!-- Presentation slides for this project can be found [here](https://docs.google.com/presentation/d/1oGZb0Qt4kjqZJ1Wt1Z70mgycKImrKrbjcb4w2-hWYXw/edit?usp=sharing). --> 
 
 ---
 
